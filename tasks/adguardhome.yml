@@ -1,0 +1,37 @@
+---
+- name: Create AdguardHome volumes
+  community.docker.docker_volume:
+    name: "{{ item }}"
+  loop:
+    - adguardhome_configuration
+    - adguardhome_data
+
+- name: Create AdguardHome network
+  community.docker.docker_network:
+    name: "{{ adguardhome_docker_network }}"
+
+- name: Create AdguardHome container
+  community.docker.docker_container:
+    name: "{{ adguardhome_docker_container_name }}"
+    image: "adguard/adguardhome:{{ adguardhome_docker_tag }}"
+    state: started
+    restart_policy: unless-stopped
+    init: true
+    published_ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "{{ adguardhome_docker_admin_panel_port }}:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+      - "3000:3000/tcp"
+      - "853:853/tcp"
+      - "784:784/udp"
+      - "853:853/udp"
+      - "8853:8853/udp"
+      - "5443:5443/tcp"
+      - "5443:5443/udp"
+    networks:
+      - name: "{{ adguardhome_docker_network }}"
+    volumes:
+      - "adguardhome_configuration:/opt/adguardhome/conf"
+      - "adguardhome_data:/opt/adguardhome/work"

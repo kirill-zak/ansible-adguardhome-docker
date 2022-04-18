@@ -1,0 +1,5 @@
+---
+adguardhome_docker_admin_panel_port: 8080
+adguardhome_docker_container_name: adguardhome
+adguardhome_docker_network: adguardhome
+adguardhome_docker_tag: latest

@@ -1,0 +1,21 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 600
+      changed_when: false
+      when: ansible_pkg_mgr == "apt"
+  vars:
+    pip_package: python3-pip
+    pip_install_packages:
+      - name: docker
+  roles:
+    - geerlingguy.pip
+    - kirill_zak.docker
+  tasks:
+    - name: "Include kirill_zak.adguardhome_docker"
+      include_role:
+        name: "kirill_zak.adguardhome_docker"

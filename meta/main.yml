@@ -1,0 +1,28 @@
+galaxy_info:
+  author: kirill_zak
+  role_name: adguardhome_docker
+  description: AdguardHome in a Docker container
+  company: https://kirill-zak.ru
+  license: GPL-2.0
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+    - name: EL
+      versions:
+        - "8"
+    - name: Fedora
+      versions:
+        - "35"
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+
+  galaxy_tags: 
+    - docker
+    - adguardhome
+
+dependencies: []

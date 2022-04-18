@@ -1,0 +1,43 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Get information about adguardhome configuration volume
+    community.docker.docker_volume_info:
+      name: adguardhome_configuration
+    register: adguardhome_configuration_status
+
+  - name: Does adguardhome configuration volume exist?
+    assert:
+      that:
+        - adguardhome_configuration_status.exists
+
+  - name: Get information about adguardhome data volume
+    community.docker.docker_volume_info:
+      name: adguardhome_data
+    register: adguardhome_data_status
+
+  - name: Does adguardhome data volume exist?
+    assert:
+      that:
+        - adguardhome_data_status.exists
+  
+  - name: Get information about adguardhome network
+    community.docker.docker_network_info:
+      name: adguardhome
+    register: adguardhome_network_status
+
+  - name: Does adguardhome network exist?
+    assert:
+      that:
+        - adguardhome_network_status.exists
+
+  - name: Get information about adguardhome container
+    community.docker.docker_container_info:
+      name: adguardhome
+    register: adguardhome_container_status
+
+  - name: Does adguardhome container exist?
+    assert:
+      that:
+        - adguardhome_container_status.exists
