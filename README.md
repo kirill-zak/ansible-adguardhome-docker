@@ -3,6 +3,14 @@ adguardhome_docker
 
 AdguardHome in a Docker container for Ubuntu
 
+## Support distributive
+
+* CentOS 8
+* Debian 10 (Buster)
+* Debian 11 (Bullseye)
+* Ubuntu 18.04 (Bionic Beaver)
+* Ubuntu 20.04 (Focal Fossa)
+
 ## Requirements
 
 Docker engine
