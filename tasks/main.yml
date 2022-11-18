@@ -1,3 +1,10 @@
 ---
-- import_tasks: systemd.yml
-- import_tasks: adguardhome.yml
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
+- name: Import systemd task if systemd resolver exist and enabled
+  import_tasks: systemd.yml
+  when: "'systemd-resolved.service' in ansible_facts.services and 'running' in ansible_facts.services['systemd-resolved.service']['state']"
+
+- name: Import AdGuardHome task
+  import_tasks: adguardhome.yml

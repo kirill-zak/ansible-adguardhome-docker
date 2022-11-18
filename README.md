@@ -5,6 +5,7 @@ AdguardHome in a Docker container for Ubuntu
 
 ## Support distributive
 
+* AlmaLinux 9
 * CentOS 8
 * Debian 10 (Buster)
 * Debian 11 (Bullseye)
