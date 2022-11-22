@@ -1,7 +1,7 @@
 adguardhome_docker
 =========
 
-AdguardHome in a Docker container for Ubuntu
+Setup and run AdguardHome in a Docker container
 
 ## Support distributive
 
@@ -11,6 +11,7 @@ AdguardHome in a Docker container for Ubuntu
 * Debian 11 (Bullseye)
 * Ubuntu 18.04 (Bionic Beaver)
 * Ubuntu 20.04 (Focal Fossa)
+* Ubuntu 22.04 (Jammy Jellyfish)
 
 ## Requirements
 
