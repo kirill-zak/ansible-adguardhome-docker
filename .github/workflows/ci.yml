@@ -50,6 +50,7 @@ jobs:
           - geerlingguy/docker-ubuntu2004
           - geerlingguy/docker-ubuntu2204
           - kirillzak/docker-almalinux9
+          - kirillzak/docker-rockylinux9
 
     steps:
       - name: Checkout the codebase
