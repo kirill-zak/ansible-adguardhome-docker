@@ -48,6 +48,7 @@ jobs:
           - geerlingguy/docker-debian11
           - geerlingguy/docker-ubuntu1804
           - geerlingguy/docker-ubuntu2004
+          - geerlingguy/docker-ubuntu2204
           - kirillzak/docker-almalinux9
 
     steps:
