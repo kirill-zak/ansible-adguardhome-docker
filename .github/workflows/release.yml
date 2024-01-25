@@ -30,6 +30,7 @@ jobs:
 
       - name: Run linter
         run: |
+          set -e
           yamllint .
           ansible-lint
 
