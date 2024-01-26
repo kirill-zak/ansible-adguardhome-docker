@@ -17,5 +17,5 @@
     - kirill_zak.docker
   tasks:
     - name: "Include kirill_zak.adguardhome_docker"
-      include_role:
+      ansible.builtin.include_role:
         name: "kirill_zak.adguardhome_docker"

@@ -54,7 +54,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies
-        run: pip3 install ansible molecule[docker] docker yamllint ansible-lint
+        run: pip3 install ansible molecule "molecule-plugins[docker]" docker yamllint ansible-lint
 
       - name: Install required collections
         run: ansible-galaxy collection install community.docker
@@ -84,7 +84,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies
-        run: pip3 install ansible molecule[docker] docker yamllint ansible-lint
+        run: pip3 install ansible molecule "molecule-plugins[docker]" docker yamllint ansible-lint
 
       - name: Install required collections
         run: ansible-galaxy collection install community.docker
@@ -119,7 +119,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies
-        run: pip3 install ansible molecule[docker] docker yamllint ansible-lint
+        run: pip3 install ansible molecule "molecule-plugins[docker]" docker yamllint ansible-lint
 
       - name: Install required collections
         run: ansible-galaxy collection install community.docker
@@ -155,7 +155,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies
-        run: pip3 install ansible molecule[docker] docker yamllint ansible-lint
+        run: pip3 install ansible molecule "molecule-plugins[docker]" docker yamllint ansible-lint
 
       - name: Install required collections
         run: ansible-galaxy collection install community.docker
@@ -191,7 +191,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies
-        run: pip3 install ansible molecule[docker] docker yamllint ansible-lint
+        run: pip3 install ansible molecule "molecule-plugins[docker]" docker yamllint ansible-lint
 
       - name: Install required collections
         run: ansible-galaxy collection install community.docker
