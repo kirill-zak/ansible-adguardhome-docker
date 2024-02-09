@@ -9,6 +9,10 @@ Setup and run AdguardHome in a Docker container
 * CentOS 8
 * Debian 10 (Buster)
 * Debian 11 (Bullseye)
+* Fedora Linux 35
+* Fedora Linux 36
+* Fedora Linux 37
+* Fedora Linux 38
 * Rocky Linux 9
 * Ubuntu 18.04 (Bionic Beaver)
 * Ubuntu 20.04 (Focal Fossa)
