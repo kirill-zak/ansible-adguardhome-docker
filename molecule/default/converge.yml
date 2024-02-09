@@ -19,3 +19,4 @@
     - name: "Include kirill_zak.adguardhome_docker"
       ansible.builtin.include_role:
         name: "kirill_zak.adguardhome_docker"
+        tasks_from: main.yml
