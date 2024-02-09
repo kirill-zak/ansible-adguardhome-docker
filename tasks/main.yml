@@ -1,6 +1,7 @@
 ---
-- name: Gather service facts
-  ansible.builtin.service_facts:
+- name: Include systemd task for Ubuntu
+  ansible.builtin.include_tasks: systemd.yml
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Import AdGuardHome task
-  ansible.builtin.import_tasks: adguardhome.yml
+  ansible.builtin.include_tasks: adguardhome.yml
