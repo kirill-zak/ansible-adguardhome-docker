@@ -1,28 +1,40 @@
+---
 galaxy_info:
   author: kirill_zak
   role_name: adguardhome_docker
   description: AdguardHome in a Docker container
   company: https://kirill-zak.ru
   license: GPL-2.0
-  min_ansible_version: '2.12'
+  min_ansible_version: '2.16'
   platforms:
+    - name: AlmaLinux
+      versions:
+        - "8"
+        - "9"
     - name: Alpine
       versions:
-        - all
+        - "all"
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - bookworm
+        - trixie
     - name: EL
       versions:
+        - "8"
         - "9"
+    - name: Fedora
+      versions:
+        - "43"
+        - "44"
+    - name: Rocky
+      versions:
+        - "all"
     - name: Ubuntu
       versions:
-        - bionic
-        - focal
         - jammy
-
-  galaxy_tags: 
+        - noble
+        - resolute
+  galaxy_tags:
     - docker
     - adguardhome
 

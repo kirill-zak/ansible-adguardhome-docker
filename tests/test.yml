@@ -1,6 +1,6 @@
 ---
-- name: Test role
+- name: Localhost
   hosts: localhost
   remote_user: root
   roles:
-    - kirill_zak.adguardhome_docker
+    - adguardhome_docker
