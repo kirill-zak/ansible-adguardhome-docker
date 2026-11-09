@@ -1,38 +1,62 @@
 ---
 - name: Converge
   hosts: all
+  # The podman driver already connects as root inside the container, so there
+  # is no need to escalate via sudo. Under the rootless podman available on
+  # GitHub runners, sudo in the systemd-based AlmaLinux/Rocky/Fedora images
+  # fails with "PAM account management error" (PAM cannot retrieve
+  # authentication info in the user namespace); connecting as root without
+  # become avoids sudo altogether.
+  become: false
+
   pre_tasks:
-    - name: Update apt cache
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: 600
+    - name: Wait for systemd to complete initialization.  # noqa: command-instead-of-module
+      ansible.builtin.command: systemctl is-system-running
+      register: systemctl_status
+      until: >
+        'running' in systemctl_status.stdout or
+        'degraded' in systemctl_status.stdout
+      retries: 30
+      delay: 5
+      when: ansible_service_mgr == 'systemd'
       changed_when: false
-      when: ansible_pkg_mgr == "apt"
+      failed_when: systemctl_status.rc > 1
+
+    - name: Install requests for the community.docker modules
+      ansible.builtin.package:
+        # community.docker 3.x >= 3.6 talks to the Docker API over plain
+        # HTTP using the requests library (the optional docker SDK for
+        # Python is not needed) -- make sure it is present on the target.
+        name: "{{ 'py3-requests' if ansible_pkg_mgr == 'apk' else 'python3-requests' }}"
+        state: present
+        # The test images ship with empty package indexes; refresh them so
+        # the requests package can be resolved (idempotent on re-runs).
+        update_cache: true
+
+    - name: Create the Docker config directory
+      ansible.builtin.file:
+        path: /etc/docker
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Configure dockerd storage driver for the nested container
+      ansible.builtin.copy:
+        content: |
+          {
+            "storage-driver": "vfs"
+          }
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '0644'
 
   tasks:
-    - name: Install "docker" PIP package for not Alpine Linux
-      ansible.builtin.include_role:
-        name: geerlingguy.pip
-      vars:
-        pip_package: python3-pip
-        pip_install_packages:
-          - name: docker
-      when:
-        - ansible_distribution != "Alpine"
-    
-    - name: Install "docker" PIP package for Alpine Linux
-      community.general.apk:
-        name: py3-docker-py
-        state: latest
-        no_cache: true
-      when:
-        - ansible_distribution == "Alpine"
-
-    - name: Include install docker role
+    - name: "Include kirill_zak.docker"
       ansible.builtin.include_role:
         name: "kirill_zak.docker"
 
-    - name: Include kirill_zak.adguardhome_docker
+    - name: "Include kirill_zak.adguardhome_docker"
       ansible.builtin.include_role:
         name: "kirill_zak.adguardhome_docker"
-        tasks_from: main.yml
