@@ -1,15 +1,25 @@
 ---
+# The systemd-resolved configuration is only meaningful when the file is
+# present (some minimal Ubuntu images, e.g. for container testing, do not
+# ship /etc/systemd/resolved.conf) -- keep the tasks skipped in that case.
+- name: Check for the systemd-resolved configuration file
+  ansible.builtin.stat:
+    path: /etc/systemd/resolved.conf
+  register: resolved_conf
+
 - name: Set 127.0.0.1 to DNS
   ansible.builtin.lineinfile:
     path: /etc/systemd/resolved.conf
     regexp: '^#DNS='
     line: 'DNS=127.0.0.1'
+  when: resolved_conf.stat.exists
 
 - name: Set "no" to DNSStubListener
   ansible.builtin.lineinfile:
     path: /etc/systemd/resolved.conf
     regexp: '^#DNSStubListener='
     line: 'DNSStubListener=no'
+  when: resolved_conf.stat.exists
 
 - name: Reload systemd-resolved configuration
   ansible.builtin.systemd:
@@ -17,3 +27,4 @@
     state: restarted
     name: systemd-resolved
   changed_when: false
+  when: resolved_conf.stat.exists
