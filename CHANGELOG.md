@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-09
+
 ### Added
 
 - Test matrix for AlmaLinux 8.x/9.x, Rocky Linux 8.x/9.x, Alpine 3.22/3.23,
@@ -48,3 +50,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   podman available on GitHub runners, sudo in the systemd-based images fails
   with `PAM account management error` (PAM cannot retrieve authentication
   info in the user namespace).
+- Fedora 43/44 converge failing with `Could not import the libdnf5 python
+  module`: Fedora 41+ reports `ansible_pkg_mgr=dnf5`, which makes the dnf
+  module dispatch to the dnf5 backend, but the test images only ship the
+  dnf4 (`python3-dnf`) bindings. The requests install now pins
+  `use_backend: dnf4` on Fedora.
+- AlmaLinux 8 converge failing with `ModuleNotFoundError: No module named
+  'requests'`: the images default python3 to 3.12 via alternatives while the
+  plain `python3-requests` package only targets the system python (3.6), so
+  converge now installs the matching `python3.12-requests` variant.
+- Ubuntu 24.04/26.04 converge failing with
+  `Destination /etc/systemd/resolved.conf does not exist`: the minimal images
+  do not ship the file, so the systemd-resolved configuration tasks are now
+  gated on the file's existence.
